@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-emerald-deep: #0f3a2f;
+  --color-emerald-light: #175243;
+  --color-gold-premium: #d4af37;
+  --color-gold-hover: #e6c687;
+  --color-brand-bg: #fcfbf9;
+}
+
+html {
+  scroll-behavior: smooth;
+}
