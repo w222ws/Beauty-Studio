@@ -1,6 +1,9 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
+import Portfolio from "./components/Portfolio";
+import Contacts from "./components/Contacts";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -9,6 +12,9 @@ function App() {
       <main className="pt-20">
         <Hero />
         <Services />
+        <Portfolio />
+        <Contacts />
+        <Footer />
       </main>
     </div>
   );

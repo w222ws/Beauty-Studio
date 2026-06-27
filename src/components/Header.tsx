@@ -6,17 +6,18 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#FCFBF9]/95 backdrop-blur-md border-b border-[#0F3A2F]/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Логотип */}
-        <div className="flex flex-col">
-          <span className="text-2xl font-bold tracking-widest text-[#0F3A2F] font-serif">
+        <a
+          href="#"
+          className="flex flex-col items-center text-center justify-center group select-none"
+        >
+          <span className="text-2xl font-bold tracking-widest text-[#0F3A2F] font-serif uppercase leading-none">
             VICTORIA
           </span>
-          <span className="text-[9px] text-[#0F3A2F]/60 uppercase tracking-[0.2em] -mt-1 font-medium">
+          <span className="text-[9px] text-[#0F3A2F]/60 uppercase tracking-[0.2em] mt-1 block font-medium">
             студія краси
           </span>
-        </div>
+        </a>
 
-        {/* Навигация ПК */}
         <nav className="hidden md:flex space-x-8 text-xs uppercase tracking-wider font-bold text-[#0F3A2F]">
           <a
             href="#hero"
@@ -31,7 +32,7 @@ export default function Header() {
             Прайс
           </a>
           <a
-            href="#gallery"
+            href="#portfolio"
             className="hover:text-[#D4AF37] transition-colors duration-300"
           >
             Портфоліо
@@ -44,7 +45,6 @@ export default function Header() {
           </a>
         </nav>
 
-        {/* Кнопка ПК */}
         <div className="hidden md:block">
           <a
             href="tel:0973968632"
@@ -54,7 +54,6 @@ export default function Header() {
           </a>
         </div>
 
-        {/* КРАСИВЫЙ ТОЛСТЫЙ БУРГЕР ДЛЯ МОБИЛКИ */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 text-[#0F3A2F] focus:outline-none"
@@ -85,7 +84,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* УДОБНОЕ, НЕ НА ВЕСЬ ЭКРАН, ВЫПАДАЮЩЕЕ МЕНЮ */}
       <div
         className={`absolute top-20 left-0 right-0 bg-[#0F3A2F] border-b border-[#D4AF37]/20 shadow-xl transition-all duration-300 ease-in-out md:hidden overflow-hidden ${isOpen ? "max-h-[340px] opacity-100" : "max-h-0 opacity-0"}`}
       >
@@ -105,7 +103,7 @@ export default function Header() {
             Прайс
           </a>
           <a
-            href="#gallery"
+            href="#portfolio"
             onClick={() => setIsOpen(false)}
             className="text-base uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors py-1"
           >
