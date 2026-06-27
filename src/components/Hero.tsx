@@ -33,9 +33,8 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-serif text-[#0F3A2F] leading-[1.15] font-normal tracking-tight">
               Студія <br />
               <span className="italic font-light text-[#0F3A2F]">
-                преміального
+                краси
               </span>{" "}
-              догляду
             </h1>
           </div>
 
