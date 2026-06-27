@@ -22,7 +22,6 @@ export default function Services() {
       title: "HAIR",
       subtitle: "Стрижки та фарбування",
       icon: (
-        /* Иконка: Парикмахерские ножницы */
         <svg
           className="w-6 h-6 text-[#D4AF37]"
           fill="none"
@@ -63,7 +62,6 @@ export default function Services() {
       title: "NAILS",
       subtitle: "Нігтьовий сервіс",
       icon: (
-        /* Иконка: Рука с аккуратными ногтями */
         <svg
           className="w-6 h-6 text-[#D4AF37]"
           fill="none"
@@ -89,7 +87,6 @@ export default function Services() {
       title: "BROWS",
       subtitle: "Догляд за бровами",
       icon: (
-        /* Иконка: Чёткая, аккуратная линия брови */
         <svg
           className="w-6 h-6 text-[#D4AF37]"
           fill="none"
@@ -164,7 +161,6 @@ export default function Services() {
         ))}
       </div>
 
-      {/* АДАПТИВНАЯ МОДАЛКА (Скролл адаптирован под большие списки) */}
       {activeCategory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn">
           <div className="bg-[#FCFBF9] w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#0F3A2F]/10 relative max-h-[85vh] flex flex-col">
@@ -196,7 +192,6 @@ export default function Services() {
               </p>
             </div>
 
-            {/* Сюда теперь влезет хоть 30 пунктов, будет аккуратно листаться пальцем */}
             <div className="overflow-y-auto flex-1 pr-1 space-y-4 scrollbar-thin">
               {activeCategory.id === "nails" ? (
                 <div className="text-center py-6 px-2 space-y-3">
@@ -242,3 +237,4 @@ export default function Services() {
     </section>
   );
 }
+// прайс

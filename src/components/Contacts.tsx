@@ -15,7 +15,6 @@ export default function Contact() {
       id="contacts"
       className="bg-[#FCFBF9] py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-10"
     >
-      {/* Фирменный заголовок */}
       <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
         <div className="inline-flex items-center space-x-2 justify-center">
           <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
@@ -27,9 +26,7 @@ export default function Contact() {
         <h2 className="text-3xl font-serif text-[#0F3A2F]">Чекаємо на вас</h2>
       </div>
 
-      {/* Асимметричная премиум-сетка */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-5xl mx-auto items-stretch">
-        {/* ЛЕВАЯ СТОРОНА: Карточка бренда с лого */}
         <div className="lg:col-span-5 bg-[#0F3A2F] text-white p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-between border border-[#D4AF37]/20 relative overflow-hidden text-center">
           <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-2xl"></div>
 
@@ -66,7 +63,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Кнопка скопировать именно этот адрес */}
           <div className="pt-8 relative z-10">
             <button
               onClick={handleCopy}
@@ -81,9 +77,7 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* ПРАВАЯ СТОРОНА: Интерактив (Вызов и Карта) */}
         <div className="lg:col-span-7 flex flex-col justify-between gap-4">
-          {/* БЛОК 1: Тот самый кликабельный сотовый */}
           <a
             href="tel:0973968632"
             className="flex-1 flex items-center justify-between p-8 bg-white border border-[#0F3A2F]/5 rounded-3xl shadow-sm hover:shadow-md hover:border-[#D4AF37]/30 transition-all duration-300 group"
@@ -121,7 +115,6 @@ export default function Contact() {
             </div>
           </a>
 
-          {/* БЛОК 2: Ссылка на Гугл Карты */}
           <a
             href="https://maps.app.goo.gl/RR79EbY4Pcz5a1cW8"
             target="_blank"
@@ -170,3 +163,4 @@ export default function Contact() {
     </section>
   );
 }
+// контакти

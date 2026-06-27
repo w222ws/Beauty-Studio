@@ -4,13 +4,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      // МАКСИМАЛЬНЫЙ ФИКС ДЫРЫ: pt-2 для мобилок, pt-0 для компов (md:).
-      // Убираем весь лишний воздух сверху, чтобы контент встал впритык к хедеру!
       className="bg-[#FCFBF9] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-0 pb-12"
     >
-      {/* Сетка: py-2 для мобилок и md:py-4 для компов убирают внутренние растягивания */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center w-full py-2 md:py-4">
-        {/* КАРТИНКА: на мобилках сверху, на компах справа */}
         <div className="relative aspect-[4/3] lg:h-[530px] lg:aspect-auto w-full rounded-[2rem] overflow-hidden shadow-xl border border-[#0F3A2F]/5 order-1 lg:order-2">
           <img
             src={studioImg}
@@ -24,7 +20,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ТЕКСТОВАЯ ЧАСТЬ: на мобилках по центру, на компах слева */}
         <div className="space-y-6 text-center lg:text-left order-2 lg:order-1">
           <div className="space-y-2">
             <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-[#D4AF37] font-bold">
@@ -33,12 +28,11 @@ export default function Hero() {
             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-serif text-[#0F3A2F] leading-[1.15] font-normal tracking-tight">
               Студія <br />
               <span className="italic font-light text-[#0F3A2F]">
-                краси
+                Твоєї краси
               </span>{" "}
             </h1>
           </div>
 
-          {/* Твой инфо-список */}
           <div className="max-w-md mx-auto lg:mx-0 text-left text-xs sm:text-sm text-gray-600 bg-[#0F3A2F]/5 p-5 rounded-2xl border border-[#0F3A2F]/5 space-y-3">
             <div className="flex items-center space-x-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0"></span>
@@ -57,7 +51,7 @@ export default function Hero() {
             <div className="flex items-center space-x-2.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0"></span>
               <p>
-                <strong className="text-[#0F3A2F]">Telephone:</strong>{" "}
+                <strong className="text-[#0F3A2F]">Телефон:</strong>{" "}
                 <a
                   href="tel:0973968632"
                   className="hover:text-[#D4AF37] text-[#0F3A2F] font-medium transition-colors underline decoration-[#D4AF37]"
@@ -68,7 +62,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Кнопка */}
           <div className="pt-2">
             <a
               href="#services"
@@ -82,3 +75,4 @@ export default function Hero() {
     </section>
   );
 }
+// херо

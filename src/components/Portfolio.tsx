@@ -15,7 +15,6 @@ export default function Portfolio() {
       id="portfolio"
       className="bg-[#FCFBF9] py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-10"
     >
-      {/* Фирменный заголовок */}
       <div className="text-center max-w-xl mx-auto mb-10 space-y-2">
         <div className="inline-flex items-center space-x-2 justify-center">
           <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
@@ -29,7 +28,6 @@ export default function Portfolio() {
         </h2>
       </div>
 
-      {/* Современная сетка с благородным эффектом поднятия */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
         {images.map((img, idx) => (
           <div
@@ -46,7 +44,6 @@ export default function Portfolio() {
         ))}
       </div>
 
-      {/* Стильная кнопка перехода в Инсту */}
       <div className="pt-12 text-center">
         <a
           href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
@@ -63,3 +60,4 @@ export default function Portfolio() {
     </section>
   );
 }
+// портфоліо
