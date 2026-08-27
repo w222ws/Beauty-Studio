@@ -2,17 +2,6 @@ import { useState } from "react";
 import { Phone, MapPin, Clock, Copy, Check, ArrowUpRight } from "lucide-react";
 
 /* ============================================================
-   JEWEL DIVIDER
-============================================================ */
-const JewelDivider = ({ className = "" }: { className?: string }) => (
-  <div className={`flex items-center gap-2 ${className}`}>
-    <span className="h-px flex-1 bg-[var(--color-stone)]" />
-    <span className="h-1.5 w-1.5 rotate-45 bg-[var(--color-gold)]" />
-    <span className="h-px flex-1 bg-[var(--color-stone)]" />
-  </div>
-);
-
-/* ============================================================
    CONTACT
 ============================================================ */
 export default function Contact() {
