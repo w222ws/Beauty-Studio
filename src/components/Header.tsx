@@ -1,131 +1,101 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const NAV_LINKS = [
+  { href: "#hero", label: "Про нас" },
+  { href: "#services", label: "Прайс" },
+  { href: "#portfolio", label: "Портфоліо" },
+  { href: "#contacts", label: "Контакти" },
+];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#FCFBF9]/95 backdrop-blur-md border-b border-[#0F3A2F]/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-base ease-editorial ${
+        scrolled
+          ? "bg-[var(--color-bg)]/75 backdrop-blur-xl backdrop-saturate-150 border-b border-[var(--color-line)]/60 shadow-[0_4px_20px_-4px_rgba(15,58,47,0.08)]"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         <a
-          href="#"
-          className="flex flex-col items-center text-center justify-center group select-none"
+          href="#hero"
+          className="flex flex-col items-center justify-center leading-none select-none group"
         >
-          <span className="text-2xl font-bold tracking-widest text-[#0F3A2F] font-serif uppercase leading-none">
-            VICTORIA
+          <span className="font-display text-xl sm:text-2xl tracking-[0.18em] text-emerald-deep uppercase transition-colors group-hover:text-gold">
+            Victoria
           </span>
-          <span className="text-[9px] text-[#0F3A2F]/60 uppercase tracking-[0.2em] mt-1 block font-medium">
+          <span className="mt-1 text-[9px] sm:text-[10px] tracking-[0.25em] text-ink-soft uppercase font-medium">
             студія краси
           </span>
         </a>
 
-        <nav className="hidden md:flex space-x-8 text-xs uppercase tracking-wider font-bold text-[#0F3A2F]">
-          <a
-            href="#hero"
-            className="hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            Про нас
-          </a>
-          <a
-            href="#services"
-            className="hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            Прайс
-          </a>
-          <a
-            href="#portfolio"
-            className="hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            Портфоліо
-          </a>
-          <a
-            href="#contacts"
-            className="hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            Контакти
-          </a>
+        <nav
+          aria-label="Основна навігація"
+          className="hidden md:flex items-center gap-8 lg:gap-10"
+        >
+          {NAV_LINKS.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="group relative py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-ink hover:text-emerald-deep transition-colors"
+            >
+              {item.label}
+              <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold transition-transform duration-base ease-editorial group-hover:scale-x-100" />
+            </a>
+          ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <a
-            href="tel:0973968632"
-            className="px-7 py-2.5 bg-[#0F3A2F] text-white text-xs uppercase tracking-widest font-bold rounded-full hover:bg-[#D4AF37] hover:text-[#0F3A2F] transition-all duration-300 shadow-md"
+            href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram студії Victoria"
+            className="p-2 text-emerald-deep hover:text-gold transition-all duration-base ease-editorial hover:scale-110 active:scale-95"
           >
-            Зв'язок
+            <svg
+              className="w-5 h-5 sm:w-[22px] sm:h-[22px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+            </svg>
+          </a>
+
+          <a
+            href="tel:+380973968632"
+            aria-label="Зателефонувати в студію"
+            className="p-2 text-emerald-deep hover:text-gold transition-all duration-base ease-editorial hover:scale-110 active:scale-95"
+          >
+            <svg
+              className="w-5 h-5 sm:w-[22px] sm:h-[22px]"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
           </a>
         </div>
-
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 text-[#0F3A2F] focus:outline-none"
-          aria-label="Toggle menu"
-        >
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {isOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.5"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.5"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      <div
-        className={`absolute top-20 left-0 right-0 bg-[#0F3A2F] border-b border-[#D4AF37]/20 shadow-xl transition-all duration-300 ease-in-out md:hidden overflow-hidden ${isOpen ? "max-h-[340px] opacity-100" : "max-h-0 opacity-0"}`}
-      >
-        <nav className="flex flex-col p-6 space-y-4 font-serif text-center">
-          <a
-            href="#hero"
-            onClick={() => setIsOpen(false)}
-            className="text-base uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors py-1"
-          >
-            Про нас
-          </a>
-          <a
-            href="#services"
-            onClick={() => setIsOpen(false)}
-            className="text-base uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors py-1"
-          >
-            Прайс
-          </a>
-          <a
-            href="#portfolio"
-            onClick={() => setIsOpen(false)}
-            className="text-base uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors py-1"
-          >
-            Портфоліо
-          </a>
-          <a
-            href="#contacts"
-            onClick={() => setIsOpen(false)}
-            className="text-base uppercase tracking-widest text-white hover:text-[#D4AF37] transition-colors py-1"
-          >
-            Контакти
-          </a>
-          <div className="pt-2">
-            <a
-              href="tel:0973968632"
-              className="inline-block px-8 py-2.5 bg-[#D4AF37] text-[#0F3A2F] text-xs uppercase tracking-widest font-bold rounded-full w-full max-w-[240px]"
-            >
-              Зателефонувати
-            </a>
-          </div>
-        </nav>
       </div>
     </header>
   );
-} // хеадер
+}

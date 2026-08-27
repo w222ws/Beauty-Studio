@@ -1,13 +1,121 @@
 @import "tailwindcss";
 
 @theme {
-  --color-emerald-deep: #0f3a2f;
-  --color-emerald-light: #175243;
-  --color-gold-premium: #d4af37;
-  --color-gold-hover: #e6c687;
-  --color-brand-bg: #fcfbf9;
+  /* Кольори: зроблені більш глибокими та дорогими, гармоніюють із мінімалізмом */
+  --color-ink: #1a221f;
+  --color-ink-soft: #4a544f;
+
+  --color-emerald-deep: #113227; /* Більш шляхетний та темний смарагд */
+  --color-emerald-mid: #255a47;
+  --color-emerald-pale: #e9eeeb;
+
+  --color-gold: #b89661; /* Спокійне матове золото/бронза замість яскравого жовтого */
+  --color-gold-soft: #dec8a6;
+
+  --color-bg: #f9f8f6; /* Дуже м'який теплий відтінок, як дорогий папір чи мармур */
+  --color-paper: #f0ece5;
+  --color-line: #dfd8cd;
+
+  /* Шрифти: широкі, тонкі та мінімалістичні */
+  --font-display: "Montserrat", ui-sans-serif, sans-serif;
+  --font-sans: "Jost", ui-sans-serif, sans-serif;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 350ms;
+  --duration-slow: 600ms;
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Заголовки: додано простору між літерами для ефекту преміального глянцю */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  letter-spacing: 0.08em; /* Максимальна ширина для головного тексту, як на референсі */
+  text-transform: uppercase;
+}
+
+::selection {
+  background-color: var(--color-emerald-pale);
+  color: var(--color-emerald-deep);
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.hero-object {
+  --mouse-x: 0px;
+  --mouse-y: 0px;
+  --mouse-rotate: 0deg;
+
+  transform: translate3d(var(--mouse-x), var(--mouse-y), 0)
+    rotate(var(--mouse-rotate));
+
+  transition: transform 500ms var(--ease-editorial);
+
+  /* Додано alternate для плавнішого ефекту дихання/висіння */
+  animation: victoria-object-float 8s ease-in-out infinite alternate;
+
+  will-change: transform;
+}
+
+@keyframes victoria-object-float {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-12px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-object {
+    left: auto;
+    right: 1%;
+    top: 34%;
+
+    height: 170px;
+    width: 170px;
+
+    animation: victoria-object-mobile 8s ease-in-out infinite alternate;
+  }
 }
