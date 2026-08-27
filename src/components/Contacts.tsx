@@ -1,11 +1,35 @@
 import { useState } from "react";
+import { Phone, MapPin, Clock, Copy, Check, ArrowUpRight } from "lucide-react";
 
+/* ============================================================
+   JEWEL DIVIDER
+============================================================ */
+const JewelDivider = ({ className = "" }: { className?: string }) => (
+  <div className={`flex items-center gap-2 ${className}`}>
+    <span className="h-px flex-1 bg-[var(--color-stone)]" />
+    <span className="h-1.5 w-1.5 rotate-45 bg-[var(--color-gold)]" />
+    <span className="h-px flex-1 bg-[var(--color-stone)]" />
+  </div>
+);
+
+/* ============================================================
+   CONTACT
+============================================================ */
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const address = "вулиця Північнодонецька, 1а, Дніпро";
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(address);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = address;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -13,154 +37,209 @@ export default function Contact() {
   return (
     <section
       id="contacts"
-      className="bg-[#FCFBF9] py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-10"
+      className="
+        bg-[var(--color-ivory)]
+        py-16 sm:py-24
+        px-4 sm:px-6 lg:px-8
+        scroll-mt-20
+      "
     >
-      <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
-        <div className="inline-flex items-center space-x-2 justify-center">
-          <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
-          <span className="text-xs font-bold tracking-[0.25em] uppercase text-[#0F3A2F]">
-            Контакти
-          </span>
-          <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
-        </div>
-        <h2 className="text-3xl font-serif text-[#0F3A2F]">Чекаємо на вас</h2>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-5xl mx-auto items-stretch">
-        <div className="lg:col-span-5 bg-[#0F3A2F] text-white p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-between border border-[#D4AF37]/20 relative overflow-hidden text-center">
-          <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#D4AF37]/10 rounded-full blur-2xl"></div>
-
-          <div className="space-y-8 relative z-10">
-            <div className="space-y-1">
-              <h3 className="font-serif text-3xl text-[#D4AF37] tracking-wider uppercase">
-                Victoria
-              </h3>
-              <p className="text-[9px] text-gray-300 uppercase tracking-[0.3em] font-light">
-                Студія краси
-              </p>
-            </div>
-
-            <div className="space-y-6 text-sm">
-              <div className="space-y-1">
-                <p className="text-gray-400 text-[10px] uppercase tracking-widest">
-                  Графік роботи
-                </p>
-                <p className="font-medium text-gray-200">Понеділок — Неділя</p>
-                <p className="text-[#D4AF37] font-semibold text-base">
-                  9:00 — 17:00{" "}
-                  <span className="text-xs font-light text-gray-400">
-                    (без вихідних)
-                  </span>
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <p className="text-gray-400 text-[10px] uppercase tracking-widest">
-                  Локація
-                </p>
-                <p className="font-medium text-gray-200 px-4">{address}</p>
-              </div>
-            </div>
+      <div className="max-w-[1100px] mx-auto">
+        {/* ========== HEADER ========== */}
+        <div className="mb-10 sm:mb-16">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="h-px w-10 sm:w-14 bg-[var(--color-gold)]" />
+            <span className="font-sans text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--color-ink-soft)]">
+              Контакти
+            </span>
           </div>
+          <h2 className="font-display font-light uppercase tracking-[-0.04em] leading-[0.9] text-[clamp(2.5rem,6vw,4.5rem)] text-[var(--color-emerald-deep)]">
+            Чекаємо
+            <span className="block mt-1 font-sans font-normal italic text-[clamp(1.5rem,3.5vw,2.5rem)] text-[var(--color-gold)]">
+              на вас
+            </span>
+          </h2>
+        </div>
 
-          <div className="pt-8 relative z-10">
+        {/* ========== CONTENT ========== */}
+        <div className="flex flex-col gap-4 sm:gap-5">
+          {/* Перша картка — телефон */}
+          <a
+            href="tel:+380973968632"
+            className="
+              group
+              flex items-center justify-between
+              bg-[var(--color-emerald)]
+              text-[var(--color-ivory)]
+              px-5 sm:px-8 py-5 sm:py-7
+              transition-all duration-500
+              hover:bg-[var(--color-emerald-mid)]
+            "
+          >
+            <div className="flex items-center gap-3.5 sm:gap-5">
+              <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)]" />
+              <div>
+                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ivory)]/50 mb-1">
+                  Телефон
+                </p>
+                <p className="font-display font-light text-lg sm:text-2xl leading-tight">
+                  097 396 86 32
+                </p>
+              </div>
+            </div>
+            <ArrowUpRight
+              className="
+              h-4 w-4 sm:h-5 sm:w-5
+              text-[var(--color-gold)]
+              transition-transform duration-500
+              group-hover:rotate-45
+            "
+            />
+          </a>
+
+          {/* Друга картка — адреса + копіювання */}
+          <div
+            className="
+            flex items-center justify-between
+            border border-[var(--color-stone)]
+            px-5 sm:px-8 py-5 sm:py-7
+            transition-all duration-500
+            hover:border-[var(--color-gold)]/50
+          "
+          >
+            <div className="flex items-center gap-3.5 sm:gap-5">
+              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)] shrink-0" />
+              <div>
+                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ink)]/50 mb-1">
+                  Адреса
+                </p>
+                <p className="font-sans text-[12px] sm:text-sm leading-snug text-[var(--color-ink)]">
+                  {address}
+                </p>
+              </div>
+            </div>
             <button
               onClick={handleCopy}
-              className={`w-full py-3 rounded-xl text-xs uppercase tracking-widest font-bold border transition-all duration-300 flex items-center justify-center space-x-2 ${copied ? "bg-[#D4AF37] text-[#0F3A2F] border-[#D4AF37]" : "border-white/20 text-white hover:border-[#D4AF37] hover:text-[#D4AF37]"}`}
+              className="
+                flex items-center gap-2
+                shrink-0
+                ml-3
+                px-3 sm:px-4 py-2
+                border border-[var(--color-stone)]
+                transition-all duration-300
+                hover:border-[var(--color-gold)]
+                hover:text-[var(--color-emerald)]
+                active:scale-[0.95]
+              "
             >
               {copied ? (
-                <span>Адресу скопійовано!</span>
+                <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]" />
               ) : (
-                <span>Скопіювати адресу</span>
+                <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               )}
+              <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em]">
+                {copied ? "Готово" : "Копіювати"}
+              </span>
             </button>
           </div>
-        </div>
 
-        <div className="lg:col-span-7 flex flex-col justify-between gap-4">
-          <a
-            href="tel:0973968632"
-            className="flex-1 flex items-center justify-between p-8 bg-white border border-[#0F3A2F]/5 rounded-3xl shadow-sm hover:shadow-md hover:border-[#D4AF37]/30 transition-all duration-300 group"
+          {/* Третя картка — години */}
+          <div
+            className="
+            flex items-center justify-between
+            border border-[var(--color-stone)]
+            px-5 sm:px-8 py-5 sm:py-7
+          "
           >
-            <div className="flex items-center space-x-5">
-              <div className="p-4 bg-[#0F3A2F]/5 rounded-2xl group-hover:bg-[#0F3A2F] group-hover:text-white transition-colors duration-300 text-[#0F3A2F]">
+            <div className="flex items-center gap-3.5 sm:gap-5">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)]" />
+              <div>
+                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ink)]/50 mb-1">
+                  Графік
+                </p>
+                <p className="font-sans text-[12px] sm:text-sm text-[var(--color-ink)]">
+                  Щодня · 09:00 — 17:00
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Четверта — карти + інста */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-5">
+            <a
+              href="https://maps.app.goo.gl/RR79EbY4Pcz5a1cW8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                group
+                flex items-center justify-between
+                border border-[var(--color-stone)]
+                px-4 sm:px-6 py-4 sm:py-5
+                transition-all duration-500
+                hover:border-[var(--color-gold)]/50
+                hover:bg-white
+              "
+            >
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]" />
+                <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink)]/70">
+                  Мапа
+                </span>
+              </div>
+              <ArrowUpRight
+                className="
+                h-3.5 w-3.5 sm:h-4 sm:w-4
+                text-[var(--color-emerald)]
+                transition-transform duration-500
+                group-hover:rotate-45
+              "
+              />
+            </a>
+
+            <a
+              href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                group
+                flex items-center justify-between
+                border border-[var(--color-stone)]
+                px-4 sm:px-6 py-4 sm:py-5
+                transition-all duration-500
+                hover:border-[var(--color-gold)]/50
+                hover:bg-white
+              "
+            >
+              <div className="flex items-center gap-2.5 sm:gap-3">
                 <svg
-                  className="w-6 h-6"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]"
+                  viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
+                  <rect x="2" y="2" width="20" height="20" rx="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
                 </svg>
+                <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink)]/70">
+                  Instagram
+                </span>
               </div>
-              <div className="text-left">
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">
-                  Запис за телефоном
-                </p>
-                <p className="text-xl font-bold text-[#0F3A2F] tracking-wider">
-                  097-396-86-32
-                </p>
-                <p className="text-xs text-gray-400 mt-1 font-light">
-                  Натисніть для дзвінка з мобільного
-                </p>
-              </div>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#D4AF37] group-hover:bg-[#0F3A2F] group-hover:text-white transition-all duration-300 transform group-hover:translate-x-1">
-              →
-            </div>
-          </a>
-
-          <a
-            href="https://maps.app.goo.gl/RR79EbY4Pcz5a1cW8"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-between p-8 bg-white border border-[#0F3A2F]/5 rounded-3xl shadow-sm hover:shadow-md hover:border-[#D4AF37]/30 transition-all duration-300 group"
-          >
-            <div className="flex items-center space-x-5">
-              <div className="p-4 bg-[#D4AF37]/10 text-[#0F3A2F] rounded-2xl group-hover:bg-[#D4AF37] transition-colors duration-300">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-              </div>
-              <div className="text-left">
-                <p className="text-[10px] text-gray-400 uppercase tracking-widest mb-1">
-                  Маршрут
-                </p>
-                <p className="text-lg font-bold text-[#0F3A2F]">
-                  Відкрити в Google Maps
-                </p>
-                <p className="text-xs text-gray-400 mt-1 font-light">
-                  Подивитись розташування на мапі
-                </p>
-              </div>
-            </div>
-            <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-[#0F3A2F] group-hover:bg-[#D4AF37] transition-all duration-300 transform group-hover:translate-x-1">
-              →
-            </div>
-          </a>
+              <ArrowUpRight
+                className="
+                h-3.5 w-3.5 sm:h-4 sm:w-4
+                text-[var(--color-emerald)]
+                transition-transform duration-500
+                group-hover:rotate-45
+              "
+              />
+            </a>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-// контакти

@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowUp } from "lucide-react";
 
 export default function Footer() {
   const handleScrollToTop = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -12,49 +13,82 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#FCFBF9] px-4 sm:px-6 lg:px-8 pb-10 pt-4 tracking-wider">
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-white border border-[#0F3A2F]/5 rounded-[2rem] p-6 sm:p-8 shadow-[0_4px_20px_rgba(15,58,47,0.01)] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] uppercase font-medium">
-          <div className="text-[#0F3A2F]/50 select-none">© 2026 Victoria</div>
+    <footer
+      className="
+      bg-[var(--color-emerald)]
+      text-[var(--color-ivory)]
+      px-4 sm:px-6 lg:px-8
+      py-6 sm:py-8
+    "
+    >
+      <div className="max-w-[1100px] mx-auto">
+        <div className="flex items-center justify-between gap-2 sm:gap-4">
+          {/* Копірайт + лого */}
+          <span
+            className="
+            font-utility text-[7px] sm:text-[9px]
+            uppercase tracking-[0.2em] sm:tracking-[0.25em]
+            text-[var(--color-ivory)]/40
+            select-none
+            whitespace-nowrap
+          "
+          >
+            © 2026{" "}
+            <span className="text-[var(--color-gold)] font-medium">
+              Victoria
+            </span>
+          </span>
 
-          <div className="flex items-center space-x-6">
-            <div className="text-[#0F3A2F]/50">
-              Розробка:{" "}
-              <a
-                href="https://t.me/off044"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#0F3A2F] hover:text-[#D4AF37] transition-colors duration-300 font-bold ml-1"
-              >
-                Tarasov Kyrylo
-              </a>
-            </div>
-
-            <span className="text-[#0F3A2F]/10 hidden sm:inline">•</span>
-
-            <button
-              onClick={handleScrollToTop}
-              className="inline-flex items-center space-x-1.5 text-[#0F3A2F]/60 hover:text-[#D4AF37] transition-colors duration-300 group font-bold"
+          {/* Розробник */}
+          <div
+            className="
+            font-utility text-[7px] sm:text-[9px]
+            uppercase tracking-[0.2em] sm:tracking-[0.25em]
+            text-[var(--color-ivory)]/40
+            whitespace-nowrap
+          "
+          >
+            <span className="hidden sm:inline">Розробка: </span>
+            <a
+              href="https://t.me/off044"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                text-[var(--color-gold)]
+                hover:text-[var(--color-ivory)]
+                transition-colors duration-300
+                font-medium
+              "
             >
-              <span>Наверх</span>
-              <svg
-                className="w-3.5 h-3.5 transform group-hover:-translate-y-0.5 transition-transform duration-300 text-[#0F3A2F] group-hover:text-[#D4AF37]"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.5 10.5L12 3m0 0l7.5 7.5M12 3v18"
-                />
-              </svg>
-            </button>
+              Tarasov Kyrylo
+            </a>
           </div>
+
+          {/* Наверх */}
+          <button
+            onClick={handleScrollToTop}
+            className="
+              group
+              inline-flex items-center gap-1.5 sm:gap-2
+              font-utility text-[7px] sm:text-[9px]
+              uppercase tracking-[0.2em] sm:tracking-[0.25em]
+              text-[var(--color-ivory)]/50
+              hover:text-[var(--color-gold)]
+              transition-colors duration-300
+              whitespace-nowrap
+            "
+          >
+            <span className="hidden sm:inline">Наверх</span>
+            <ArrowUp
+              className="
+              h-3 w-3 sm:h-3.5 sm:w-3.5
+              transition-transform duration-300
+              group-hover:-translate-y-0.5
+            "
+            />
+          </button>
         </div>
       </div>
     </footer>
   );
 }
-// підвал

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, Phone } from "lucide-react";
 
 interface PriceItem {
   name: string;
@@ -6,235 +8,427 @@ interface PriceItem {
 }
 
 interface Category {
-  id: "hair" | "nails" | "brows";
+  id: string;
   title: string;
   subtitle: string;
-  icon: React.ReactNode;
+  note?: string;
   items?: PriceItem[];
 }
 
-export default function Services() {
-  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+const categories: Category[] = [
+  {
+    id: "hair",
+    title: "Hair",
+    subtitle: "Стрижки та фарбування",
+    items: [
+      { name: "Стрижка жіноча (коротка)", price: "400–450 ₴" },
+      { name: "Стрижка жіноча (каре)", price: "450–600 ₴" },
+      { name: "Стрижка жіноча (каскад)", price: "450–750 ₴" },
+      { name: "Підрівнювання кінчиків", price: "400–500 ₴" },
+      { name: "Укладка волосся з препаратом", price: "500–700 ₴" },
+      { name: "Накрутити волосся", price: "800–1200 ₴" },
 
-  const categories: Category[] = [
-    {
-      id: "hair",
-      title: "HAIR",
-      subtitle: "Стрижки та фарбування",
-      icon: (
-        <svg
-          className="w-6 h-6 text-[#D4AF37]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-        >
-          <circle cx="6" cy="6" r="3" />
-          <circle cx="6" cy="18" r="3" />
-          <line x1="8.5" y1="7.5" x2="19" y2="18" />
-          <line x1="8.5" y1="16.5" x2="19" y2="6" />
-        </svg>
-      ),
-      items: [
-        // Жіночі стрижки
-        { name: "Стрижка жіноча (коротка)", price: "400-450 ₴" },
-        { name: "Стрижка жіноча (каре)", price: "450-600 ₴" },
-        { name: "Стрижка жіноча (каскад)", price: "450-750 ₴" },
-        { name: "Підрівнювання кінчиків", price: "400-500 ₴" },
-        { name: "Укладка волосся з препаратом", price: "500-700 ₴" },
-        { name: "Накрутити волосся", price: "800-1200 ₴" },
-        // Фарбування
-        { name: "Фарбування (зі своєю фарбою)", price: "500-700 ₴" },
-        { name: "Фарбування в 1 тон", price: "1200-2500 ₴" },
-        { name: "Мелірування волосся", price: "1500-3000 ₴" },
-        { name: "Подвійне фарбування", price: "2000-4000 ₴" },
-        { name: "Складні техніки (Airtouch / Balayage)", price: "3000-6000 ₴" },
-        { name: "Вихід з темного кольору", price: "500-7000 ₴" },
-        // Чоловічі
-        { name: "Стрижка чоловіча (під 1 насадку)", price: "300 ₴" },
-        { name: "Стрижка чоловіча (під насадки)", price: "350 ₴" },
-        { name: "Стрижка чоловіча (машинка + ножиці)", price: "400 ₴" },
-        { name: "Оформлення бороди", price: "300-500 ₴" },
-      ],
-    },
-    {
-      id: "nails",
-      title: "NAILS",
-      subtitle: "Нігтьовий сервіс",
-      icon: (
-        <svg
-          className="w-6 h-6 text-[#D4AF37]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 11c0-1.5-1-3-2.5-3S7 9.5 7 11v6c0 2 1.5 3 3.5 3s3.5-1 3.5-3v-4.5c0-1-.5-2-1.5-2s-1.5 1-1.5 2V15"
-          />
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17 12c0-1-.5-2-1.5-2s-1.5 1-1.5 2v4M21 13c0-1-.5-2-1.5-2s-1.5 1-1.5 2v2"
-          />
-        </svg>
-      ),
-    },
-    {
-      id: "brows",
-      title: "BROWS",
-      subtitle: "Догляд за бровами",
-      icon: (
-        <svg
-          className="w-6 h-6 text-[#D4AF37]"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 14c2.5-4 6.5-6.5 11-6.5 2.5 0 5 1 7 2.5"
-          />
-        </svg>
-      ),
-      items: [
-        { name: "Корекція без фарбування", price: "300 ₴" },
-        { name: "Корекція та фарбування", price: "450 ₴" },
-        { name: "Ламінування з корекцією", price: "500 ₴" },
-        { name: "Ламінування брів з корекцією та фарбуванням", price: "650 ₴" },
-        { name: "Ботокс (відновлення та живлення)", price: "100 ₴" },
-        { name: "Видалення пушку над губою", price: "150 ₴" },
-        { name: "Видалення волосків з носу", price: "150 ₴" },
-      ],
-    },
-  ];
+      { name: "Фарбування (зі своєю фарбою)", price: "500–700 ₴" },
+      { name: "Фарбування в 1 тон", price: "1200–2500 ₴" },
+      { name: "Мелірування волосся", price: "1500–3000 ₴" },
+      { name: "Подвійне фарбування", price: "2000–4000 ₴" },
+      {
+        name: "Складні техніки (Airtouch / Balayage)",
+        price: "3000–6000 ₴",
+      },
+      { name: "Вихід з темного кольору", price: "500–7000 ₴" },
+
+      { name: "Стрижка чоловіча (під 1 насадку)", price: "300 ₴" },
+      { name: "Стрижка чоловіча (під насадки)", price: "350 ₴" },
+      {
+        name: "Стрижка чоловіча (машинка + ножиці)",
+        price: "400 ₴",
+      },
+      { name: "Оформлення бороди", price: "300–500 ₴" },
+    ],
+  },
+
+  {
+    id: "nails",
+    title: "Nails",
+    subtitle: "Нігтьовий сервіс",
+    note: "Вартість послуг нігтьового сервісу залежить від складності дизайну, стану нігтів та обраних матеріалів. Зателефонуйте для консультації майстра.",
+  },
+
+  {
+    id: "brows",
+    title: "Brows",
+    subtitle: "Догляд за бровами",
+    items: [
+      { name: "Корекція без фарбування", price: "300 ₴" },
+      { name: "Корекція та фарбування", price: "450 ₴" },
+      { name: "Ламінування з корекцією", price: "500 ₴" },
+      {
+        name: "Ламінування брів з корекцією та фарбуванням",
+        price: "650 ₴",
+      },
+      { name: "Ботокс (відновлення та живлення)", price: "100 ₴" },
+      { name: "Видалення пушку над губою", price: "150 ₴" },
+      { name: "Видалення волосків з носу", price: "150 ₴" },
+    ],
+  },
+];
+
+export default function Services() {
+  const [openId, setOpenId] = useState<string | null>("hair");
+
+  const toggleCategory = (id: string) => {
+    setOpenId((currentId) => {
+      if (currentId === id) {
+        return null;
+      }
+
+      return id;
+    });
+  };
 
   return (
     <section
       id="services"
-      className="bg-[#FCFBF9] py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-10"
+      className="
+        bg-[var(--color-bg)]
+        px-5 py-20
+        sm:px-8 sm:py-28
+        lg:px-12
+        scroll-mt-20
+      "
     >
-      <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
-        <div className="inline-flex items-center space-x-2 justify-center">
-          <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
-          <span className="text-xs font-bold tracking-[0.25em] uppercase text-[#0F3A2F]">
-            Послуги
-          </span>
-          <span className="h-[1px] w-6 bg-[#D4AF37]"></span>
-        </div>
-        <h2 className="text-3xl font-serif text-[#0F3A2F]">Напрямки краси</h2>
-      </div>
+      <div className="mx-auto max-w-[1100px]">
+        {/* HEADER */}
+        <div className="mb-10 sm:mb-16">
+          <div className="mb-4 flex items-center gap-4">
+            <span className="h-px w-10 bg-[var(--color-gold)] sm:w-14" />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {categories.map((category, idx) => (
-          <div
-            key={idx}
-            className="group bg-white border border-[#0F3A2F]/5 p-6 rounded-3xl shadow-sm hover:shadow-md hover:border-[#D4AF37]/30 transition-all duration-300 flex flex-col items-center text-center justify-between"
-          >
-            <div className="flex flex-col items-center space-y-4 py-2">
-              <div className="w-12 h-12 bg-[#0F3A2F]/5 rounded-2xl flex items-center justify-center group-hover:bg-[#0F3A2F] transition-all duration-300">
-                {category.icon}
-              </div>
-              <div>
-                <h3 className="text-xl font-serif tracking-widest text-[#0F3A2F] font-bold">
-                  {category.title}
-                </h3>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#D4AF37]">
-                  {category.subtitle}
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full pt-4">
-              <button
-                onClick={() => setActiveCategory(category)}
-                className="w-full text-center bg-[#0F3A2F] text-white py-2.5 rounded-full text-xs uppercase tracking-wider font-bold hover:bg-[#D4AF37] hover:text-[#0F3A2F] transition-all duration-300 shadow-sm"
-              >
-                Дізнатись прайс
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {activeCategory && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-fadeIn">
-          <div className="bg-[#FCFBF9] w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#0F3A2F]/10 relative max-h-[85vh] flex flex-col">
-            <button
-              onClick={() => setActiveCategory(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-[#0F3A2F] p-2 transition-colors"
+            <span
+              className="
+                font-sans
+                text-[10px]
+                font-semibold
+                uppercase
+                tracking-[0.3em]
+                text-[var(--color-ink-soft)]
+                sm:text-[11px]
+              "
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
+              Послуги
+            </span>
+          </div>
+
+          <h2
+            className="
+              font-display
+              text-[clamp(2.5rem,6vw,4.5rem)]
+              font-light
+              uppercase
+              leading-[0.9]
+              tracking-[-0.04em]
+              text-[var(--color-emerald-deep)]
+            "
+          >
+            Напрямки
+            <span
+              className="
+                mt-1
+                block
+                font-sans
+                text-[clamp(1.5rem,3.5vw,2.5rem)]
+                font-normal
+                italic
+                text-[var(--color-gold)]
+              "
+            >
+              краси
+            </span>
+          </h2>
+        </div>
+
+        {/* CATEGORIES */}
+        <div className="flex flex-col gap-3 sm:gap-4">
+          {categories.map((category) => {
+            const isOpen = openId === category.id;
+
+            return (
+              <div
+                key={category.id}
+                className={`
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  transition-all
+                  duration-500
+                  sm:rounded-3xl
+                  ${
+                    isOpen
+                      ? "border-[var(--color-gold)]/40 bg-white shadow-[0_8px_40px_rgba(15,58,47,0.06)]"
+                      : "border-[var(--color-line)] bg-transparent hover:border-[var(--color-gold)]/30"
+                  }
+                `}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-
-            <div className="text-center mb-6 pb-4 border-b border-gray-100 shrink-0">
-              <h3 className="text-2xl font-serif tracking-widest text-[#0F3A2F] font-bold">
-                {activeCategory.title}
-              </h3>
-              <p className="text-xs uppercase tracking-wider text-[#D4AF37] font-semibold mt-1">
-                {activeCategory.subtitle}
-              </p>
-            </div>
-
-            <div className="overflow-y-auto flex-1 pr-1 space-y-4 scrollbar-thin">
-              {activeCategory.id === "nails" ? (
-                <div className="text-center py-6 px-2 space-y-3">
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    Вартість послуг нігтьового сервісу може змінюватися в
-                    залежності від складності дизайну, стану нігтів та обраних
-                    матеріалів.
-                  </p>
-                  <p className="text-xs font-semibold text-[#0F3A2F] bg-[#0F3A2F]/5 p-3 rounded-xl border border-[#0F3A2F]/5">
-                    Щоб дізнатися актуальну ціну або отримати консультацію
-                    майстра, будь ласка, зв'яжіться з нами по телефону.
-                  </p>
-                </div>
-              ) : (
-                activeCategory.items?.map((item, itemIdx) => (
-                  <div
-                    key={itemIdx}
-                    className="flex justify-between items-end space-x-2"
-                  >
-                    <span className="text-xs sm:text-sm text-gray-700 font-medium pb-0.5 leading-tight">
-                      {item.name}
+                {/* CATEGORY BUTTON */}
+                <button
+                  type="button"
+                  onClick={() => toggleCategory(category.id)}
+                  aria-expanded={isOpen}
+                  className="
+                    group
+                    flex
+                    w-full
+                    cursor-pointer
+                    items-center
+                    justify-between
+                    gap-4
+                    px-5
+                    py-5
+                    text-left
+                    sm:px-7
+                    sm:py-6
+                  "
+                >
+                  <div className="flex flex-wrap items-baseline gap-3 sm:gap-5">
+                    <span
+                      className="
+                        font-display
+                        text-[clamp(1.4rem,4vw,2rem)]
+                        font-light
+                        uppercase
+                        leading-none
+                        tracking-[-0.03em]
+                        text-[var(--color-emerald-deep)]
+                      "
+                    >
+                      {category.title}
                     </span>
-                    <div className="flex-1 border-b border-dotted border-gray-300 mb-1"></div>
-                    <span className="text-xs sm:text-sm font-bold text-[#0F3A2F] whitespace-nowrap">
-                      {item.price}
+
+                    <span
+                      className="
+                        font-sans
+                        text-[9px]
+                        font-medium
+                        uppercase
+                        tracking-[0.2em]
+                        text-[var(--color-ink-soft)]
+                        sm:text-[10px]
+                      "
+                    >
+                      {category.subtitle}
                     </span>
                   </div>
-                ))
-              )}
-            </div>
 
-            <div className="pt-6 mt-4 border-t border-gray-100 shrink-0">
-              <a
-                href="tel:0973968632"
-                className="block text-center bg-[#0F3A2F] text-white py-3 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-[#D4AF37] hover:text-[#0F3A2F] transition-all duration-300"
-              >
-                Зателефонувати та записатись
-              </a>
-            </div>
-          </div>
+                  {/* PLUS / CROSS */}
+                  <span
+                    className={`
+                      relative
+                      flex
+                      h-9
+                      w-9
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-full
+                      transition-all
+                      duration-500
+                      sm:h-10
+                      sm:w-10
+                      ${
+                        isOpen
+                          ? "bg-[var(--color-emerald-deep)]"
+                          : "border border-[var(--color-line)]"
+                      }
+                    `}
+                  >
+                    <Plus
+                      className={`
+                        h-4
+                        w-4
+                        transition-transform
+                        duration-500
+                        sm:h-[18px]
+                        sm:w-[18px]
+                        ${
+                          isOpen
+                            ? "rotate-45 text-[var(--color-gold)]"
+                            : "rotate-0 text-[var(--color-ink-soft)]"
+                        }
+                      `}
+                    />
+                  </span>
+                </button>
+
+                {/* CONTENT */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{
+                        height: {
+                          duration: 0.45,
+                          ease: [0.16, 1, 0.3, 1],
+                        },
+                        opacity: {
+                          duration: 0.25,
+                        },
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-5 pb-6 sm:px-7 sm:pb-8">
+                        <div className="border-t border-[var(--color-line)]/60 pt-5 sm:pt-6">
+                          {/* NAILS */}
+                          {category.id === "nails" ? (
+                            <div className="max-w-[560px]">
+                              <p
+                                className="
+                                  font-sans
+                                  text-[13px]
+                                  leading-[1.7]
+                                  text-[var(--color-ink-soft)]
+                                  sm:text-sm
+                                "
+                              >
+                                {category.note}
+                              </p>
+
+                              <a
+                                href="tel:+380973968632"
+                                className="
+                                  mt-5
+                                  inline-flex
+                                  items-center
+                                  gap-2.5
+                                  font-sans
+                                  text-[11px]
+                                  font-semibold
+                                  uppercase
+                                  tracking-[0.15em]
+                                  text-[var(--color-emerald-deep)]
+                                  transition-colors
+                                  duration-300
+                                  hover:text-[var(--color-gold)]
+                                "
+                              >
+                                <Phone className="h-4 w-4 text-[var(--color-gold)]" />
+                                Консультація майстра
+                              </a>
+                            </div>
+                          ) : (
+                            /* PRICE LIST */
+                            <div className="sm:columns-2 sm:gap-x-10 lg:gap-x-14">
+                              {category.items?.map((item, index) => (
+                                <motion.div
+                                  key={`${category.id}-${index}`}
+                                  initial={{ opacity: 0, y: 6 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{
+                                    duration: 0.25,
+                                    delay: index * 0.025,
+                                  }}
+                                  className="
+                                    flex
+                                    items-baseline
+                                    gap-3
+                                    break-inside-avoid
+                                    py-1.5
+                                  "
+                                >
+                                  <span
+                                    className="
+                                      font-sans
+                                      text-[12px]
+                                      leading-snug
+                                      text-[var(--color-ink)]
+                                      sm:text-[13px]
+                                    "
+                                  >
+                                    {item.name}
+                                  </span>
+
+                                  <span
+                                    className="
+                                      mb-1
+                                      flex-1
+                                      border-b
+                                      border-dotted
+                                      border-[var(--color-line)]
+                                    "
+                                  />
+
+                                  <span
+                                    className="
+                                      whitespace-nowrap
+                                      font-sans
+                                      text-[12px]
+                                      font-semibold
+                                      text-[var(--color-emerald-deep)]
+                                      sm:text-[13px]
+                                    "
+                                  >
+                                    {item.price}
+                                  </span>
+                                </motion.div>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* CTA */}
+                          <a
+                            href="tel:+380973968632"
+                            className="
+                              mt-6
+                              inline-flex
+                              items-center
+                              gap-3
+                              rounded-full
+                              bg-[var(--color-emerald-deep)]
+                              py-2.5
+                              pl-5
+                              pr-2.5
+                              font-sans
+                              text-[10px]
+                              font-semibold
+                              uppercase
+                              tracking-[0.18em]
+                              text-[var(--color-bg)]
+                              transition-all
+                              duration-300
+                              hover:bg-[var(--color-emerald-mid)]
+                              active:scale-[0.97]
+                              sm:mt-8
+                              sm:text-[11px]
+                            "
+                          >
+                            Записатись
+                            <span
+                              className="
+                                flex
+                                h-8
+                                w-8
+                                items-center
+                                justify-center
+                                rounded-full
+                                bg-[var(--color-gold)]
+                                sm:h-9
+                                sm:w-9
+                              "
+                            >
+                              <Phone className="h-3.5 w-3.5 text-[var(--color-bg)] sm:h-4 sm:w-4" />
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </section>
   );
 }
-// прайс

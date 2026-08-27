@@ -11,21 +11,28 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+
     onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-base ease-editorial ${
+      className={`fixed inset-x-0 top-0 z-50 w-full transition-all duration-base ease-editorial ${
         scrolled
           ? "bg-[var(--color-bg)]/75 backdrop-blur-xl backdrop-saturate-150 border-b border-[var(--color-line)]/60 shadow-[0_4px_20px_-4px_rgba(15,58,47,0.08)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+      <div className="box-border max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
         <a
           href="#hero"
           className="flex flex-col items-center justify-center leading-none select-none group"
@@ -33,6 +40,7 @@ export default function Header() {
           <span className="font-display text-xl sm:text-2xl tracking-[0.18em] text-emerald-deep uppercase transition-colors group-hover:text-gold">
             Victoria
           </span>
+
           <span className="mt-1 text-[9px] sm:text-[10px] tracking-[0.25em] text-ink-soft uppercase font-medium">
             студія краси
           </span>
@@ -49,6 +57,7 @@ export default function Header() {
               className="group relative py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-ink hover:text-emerald-deep transition-colors"
             >
               {item.label}
+
               <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-gold transition-transform duration-base ease-editorial group-hover:scale-x-100" />
             </a>
           ))}
@@ -71,7 +80,7 @@ export default function Header() {
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+              <rect x="2" y="2" width="20" height="20" rx="5" />
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
               <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
             </svg>
