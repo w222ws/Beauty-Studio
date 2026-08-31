@@ -1,28 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  /* Кольори: зроблені більш глибокими та дорогими, гармоніюють із мінімалізмом */
+  /* Кольори: поглиблені й потеплені для відчуття дорогого, тактильного бренду */
   --color-ink: #1a221f;
   --color-ink-soft: #4a544f;
+  --color-ink-faint: #7a827c;
 
-  --color-emerald-deep: #113227; /* Більш шляхетний та темний смарагд */
-  --color-emerald-mid: #255a47;
+  --color-emerald-deep: #0f2b21; /* Ще глибший, майже чорний смарагд */
+  --color-emerald-mid: #235644;
   --color-emerald-pale: #e9eeeb;
 
-  --color-gold: #b89661; /* Спокійне матове золото/бронза замість яскравого жовтого */
-  --color-gold-soft: #dec8a6;
+  --color-gold: #b8935e; /* Тепла матова бронза замість жовтизни */
+  --color-gold-soft: #e3cda4;
+  --color-gold-deep: #8f6d3f;
 
-  --color-bg: #f9f8f6; /* Дуже м'який теплий відтінок, як дорогий папір чи мармур */
-  --color-paper: #f0ece5;
-  --color-line: #dfd8cd;
+  --color-blush: #d9b9a4; /* Делікатний акцент "пудра" — для дрібних деталей */
 
-  /* Шрифти: широкі, тонкі та мінімалістичні */
-  --font-display: "Montserrat", ui-sans-serif, sans-serif;
-  --font-sans: "Jost", ui-sans-serif, sans-serif;
+  --color-bg: #f9f7f3; /* М'який теплий папір/мармур */
+  --color-paper: #f1ece3;
+  --color-line: #e0d7c8;
+
+  /* Шрифти: контрастний editorial-serif для заголовків + чистий геометричний
+     sans для тексту. Обидва мають повну підтримку кирилиці. */
+  --font-display: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Manrope", ui-sans-serif, sans-serif;
 
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
+  --radius-lg: 16px;
+
+  --shadow-soft: 0 24px 60px -32px rgb(15 43 33 / 0.28);
+  --shadow-card: 0 12px 32px -16px rgb(26 34 31 / 0.16);
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
@@ -38,24 +47,72 @@ body {
   background-color: var(--color-bg);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-weight: 400;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-feature-settings:
+    "liga" 1,
+    "kern" 1;
 }
 
-/* Заголовки: додано простору між літерами для ефекту преміального глянцю */
+/* Заголовки: контрастний serif із трохи ширшим міжлітерним інтервалом —
+   editorial-відчуття, властиве преміальним журналам про красу. */
 h1,
 h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--color-emerald-deep);
 }
 
 h1 {
-  letter-spacing: 0.08em; /* Максимальна ширина для головного тексту, як на референсі */
-  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.03em; /* Serif потребує вужчого трекінгу, ніж sans */
+  line-height: 1.08;
+}
+
+h2 {
+  font-weight: 400;
+  letter-spacing: 0.015em;
+}
+
+/* Курсивне накреслення display-шрифту — для делікатних підзаголовків
+   і цитат, без надмірного декору */
+.text-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-emerald-mid);
+}
+
+p {
+  color: var(--color-ink-soft);
+  max-width: 62ch;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Тонка золота лінія-розділювач — структурний елемент, а не декор */
+.hr-gold {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold-soft) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-soft) 80%,
+    transparent
+  );
+  border: none;
 }
 
 ::selection {
@@ -66,6 +123,7 @@ h1 {
 :focus-visible {
   outline: 1px solid var(--color-gold);
   outline-offset: 4px;
+  border-radius: var(--radius-xs);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -92,10 +150,10 @@ h1 {
 
   transition: transform 500ms var(--ease-editorial);
 
-  /* Додано alternate для плавнішого ефекту дихання/висіння */
   animation: victoria-object-float 8s ease-in-out infinite alternate;
 
   will-change: transform;
+  filter: drop-shadow(var(--shadow-soft));
 }
 
 @keyframes victoria-object-float {
@@ -118,4 +176,39 @@ h1 {
 
     animation: victoria-object-mobile 8s ease-in-out infinite alternate;
   }
+}
+
+@keyframes victoria-object-mobile {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 30s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
 }

@@ -1,14 +1,32 @@
 import { useState } from "react";
-import { Phone, MapPin, Clock, Copy, Check, ArrowUpRight } from "lucide-react";
+import { Copy, Check, ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
 
-/* ============================================================
-   CONTACT
-============================================================ */
+/* Кастомная SVG-иконка Instagram в общем стиле Lucide */
+function InstagramIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const address = "вулиця Північнодонецька, 1а, Дніпро";
+  const mapsUrl = "https://maps.app.goo.gl/RR79EbY4Pcz5a1cW8";
 
-  const handleCopy = async () => {
+  const handleCopy = async (e: React.MouseEvent) => {
+    e.stopPropagation();
     try {
       await navigator.clipboard.writeText(address);
     } catch {
@@ -26,206 +44,131 @@ export default function Contact() {
   return (
     <section
       id="contacts"
-      className="
-        bg-[var(--color-ivory)]
-        py-16 sm:py-24
-        px-4 sm:px-6 lg:px-8
-        scroll-mt-20
-      "
+      className="bg-[var(--color-ivory)] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 scroll-mt-20 select-none"
     >
-      <div className="max-w-[1100px] mx-auto">
-        {/* ========== HEADER ========== */}
-        <div className="mb-10 sm:mb-16">
-          <div className="flex items-center gap-4 mb-4">
-            <span className="h-px w-10 sm:w-14 bg-[var(--color-gold)]" />
-            <span className="font-sans text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.3em] text-[var(--color-ink-soft)]">
-              Контакти
+      <div className="max-w-[960px] mx-auto">
+        {/* HEADER (Слева, без дублирования названия) */}
+        <div className="mb-10 sm:mb-14">
+          <div className="flex items-center gap-3 mb-3">
+            <span className="h-px w-10 bg-[var(--color-gold)]" />
+            <span className="font-utility text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-[var(--color-ink-soft)]">
+              Контакти & Графік
             </span>
           </div>
-          <h2 className="font-display font-light uppercase tracking-[-0.04em] leading-[0.9] text-[clamp(2.5rem,6vw,4.5rem)] text-[var(--color-emerald-deep)]">
-            Чекаємо
-            <span className="block mt-1 font-sans font-normal italic text-[clamp(1.5rem,3.5vw,2.5rem)] text-[var(--color-gold)]">
-              на вас
+          <h2 className="font-display font-light uppercase tracking-tight leading-[0.95] text-[clamp(2.4rem,5.5vw,4rem)] text-[var(--color-emerald-deep)]">
+            Заплануйте <br />
+            <span className="font-sans italic font-normal text-[var(--color-gold)]">
+              ваш візит
             </span>
           </h2>
+          <p className="font-sans text-xs sm:text-sm text-[var(--color-ink-soft)] mt-4 max-w-md leading-relaxed">
+            Завітайте до нас за преміальним доглядом та гарним настроєм. Чекаємо
+            на вас щодня.
+          </p>
         </div>
 
-        {/* ========== CONTENT ========== */}
-        <div className="flex flex-col gap-4 sm:gap-5">
-          {/* Перша картка — телефон */}
+        {/* CARDS GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+          {/* PHONE (Большая карточка слева) */}
           <a
             href="tel:+380973968632"
-            className="
-              group
-              flex items-center justify-between
-              bg-[var(--color-emerald)]
-              text-[var(--color-ivory)]
-              px-5 sm:px-8 py-5 sm:py-7
-              transition-all duration-500
-              hover:bg-[var(--color-emerald-mid)]
-            "
+            className="group md:col-span-8 bg-white/80 border border-[var(--color-stone)] p-6 sm:p-7 rounded-3xl flex items-center justify-between transition-all duration-300 hover:border-[var(--color-gold)] hover:bg-white hover:shadow-sm active:scale-[0.99]"
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <div className="flex items-center gap-3.5 sm:gap-5">
-              <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)]" />
+            <div className="flex items-center gap-4 sm:gap-5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-ivory)] border border-[var(--color-stone)] text-[var(--color-gold)]">
+                <Phone className="h-5 w-5" />
+              </div>
               <div>
-                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ivory)]/50 mb-1">
-                  Телефон
-                </p>
-                <p className="font-display font-light text-lg sm:text-2xl leading-tight">
+                <span className="block font-utility text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] mb-1 font-semibold">
+                  Швидкий зв'язок
+                </span>
+                <span className="font-display font-light text-2xl sm:text-3xl text-[var(--color-emerald-deep)]">
                   097 396 86 32
-                </p>
+                </span>
               </div>
             </div>
-            <ArrowUpRight
-              className="
-              h-4 w-4 sm:h-5 sm:w-5
-              text-[var(--color-gold)]
-              transition-transform duration-500
-              group-hover:rotate-45
-            "
-            />
+            <ArrowUpRight className="h-5 w-5 text-[var(--color-ink-soft)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--color-gold)]" />
           </a>
 
-          {/* Друга картка — адреса + копіювання */}
-          <div
-            className="
-            flex items-center justify-between
-            border border-[var(--color-stone)]
-            px-5 sm:px-8 py-5 sm:py-7
-            transition-all duration-500
-            hover:border-[var(--color-gold)]/50
-          "
+          {/* INSTAGRAM (Маленькая иконка-кнопка справа) */}
+          <a
+            href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="group md:col-span-4 bg-white/80 border border-[var(--color-stone)] p-6 rounded-3xl flex items-center justify-between transition-all duration-300 hover:border-[var(--color-gold)] hover:bg-white hover:shadow-sm active:scale-[0.99]"
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <div className="flex items-center gap-3.5 sm:gap-5">
-              <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)] shrink-0" />
-              <div>
-                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ink)]/50 mb-1">
-                  Адреса
-                </p>
-                <p className="font-sans text-[12px] sm:text-sm leading-snug text-[var(--color-ink)]">
-                  {address}
-                </p>
+            <div className="flex items-center gap-3.5">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--color-ivory)] border border-[var(--color-stone)] text-[var(--color-gold)]">
+                <InstagramIcon className="h-5.5 w-5.5" />
               </div>
-            </div>
-            <button
-              onClick={handleCopy}
-              className="
-                flex items-center gap-2
-                shrink-0
-                ml-3
-                px-3 sm:px-4 py-2
-                border border-[var(--color-stone)]
-                transition-all duration-300
-                hover:border-[var(--color-gold)]
-                hover:text-[var(--color-emerald)]
-                active:scale-[0.95]
-              "
-            >
-              {copied ? (
-                <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]" />
-              ) : (
-                <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              )}
-              <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em]">
-                {copied ? "Готово" : "Копіювати"}
+              <span className="font-utility text-[10px] uppercase tracking-[0.2em] font-semibold text-[var(--color-emerald-deep)]">
+                Instagram
               </span>
-            </button>
-          </div>
+            </div>
+            <ArrowUpRight className="h-5 w-5 text-[var(--color-ink-soft)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--color-gold)]" />
+          </a>
 
-          {/* Третя картка — години */}
+          {/* ADDRESS + MAP LINK */}
           <div
-            className="
-            flex items-center justify-between
-            border border-[var(--color-stone)]
-            px-5 sm:px-8 py-5 sm:py-7
-          "
+            onClick={() => window.open(mapsUrl, "_blank")}
+            className="group cursor-pointer md:col-span-8 bg-white/80 border border-[var(--color-stone)] p-6 sm:p-7 rounded-3xl flex flex-col justify-between gap-4 transition-all duration-300 hover:border-[var(--color-gold)] hover:bg-white hover:shadow-sm active:scale-[0.99]"
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
-            <div className="flex items-center gap-3.5 sm:gap-5">
-              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--color-gold)]" />
-              <div>
-                <p className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-[var(--color-ink)]/50 mb-1">
-                  Графік
-                </p>
-                <p className="font-sans text-[12px] sm:text-sm text-[var(--color-ink)]">
-                  Щодня · 09:00 — 17:00
-                </p>
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <MapPin className="h-5 w-5 text-[var(--color-gold)] shrink-0" />
+                <span className="font-utility text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] font-semibold">
+                  Локація
+                </span>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[var(--color-stone)] bg-[var(--color-ivory)] font-utility text-[9px] uppercase tracking-wider text-[var(--color-emerald-deep)] transition-colors hover:border-[var(--color-gold)] active:scale-95"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-3 w-3 text-emerald-600" />
+                    <span>Скопійовано</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3 w-3 text-[var(--color-ink-soft)]" />
+                    <span>Копіювати</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="flex items-end justify-between gap-4">
+              <p className="font-sans text-sm sm:text-base font-medium text-[var(--color-emerald-deep)] leading-snug">
+                {address}
+              </p>
+              <div className="flex items-center gap-1 shrink-0 font-utility text-[9px] uppercase tracking-wider text-[var(--color-gold)] font-medium">
+                <span>Мапа</span>
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </div>
           </div>
 
-          {/* Четверта — карти + інста */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-5">
-            <a
-              href="https://maps.app.goo.gl/RR79EbY4Pcz5a1cW8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                group
-                flex items-center justify-between
-                border border-[var(--color-stone)]
-                px-4 sm:px-6 py-4 sm:py-5
-                transition-all duration-500
-                hover:border-[var(--color-gold)]/50
-                hover:bg-white
-              "
-            >
-              <div className="flex items-center gap-2.5 sm:gap-3">
-                <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]" />
-                <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink)]/70">
-                  Мапа
-                </span>
-              </div>
-              <ArrowUpRight
-                className="
-                h-3.5 w-3.5 sm:h-4 sm:w-4
-                text-[var(--color-emerald)]
-                transition-transform duration-500
-                group-hover:rotate-45
-              "
-              />
-            </a>
-
-            <a
-              href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="
-                group
-                flex items-center justify-between
-                border border-[var(--color-stone)]
-                px-4 sm:px-6 py-4 sm:py-5
-                transition-all duration-500
-                hover:border-[var(--color-gold)]/50
-                hover:bg-white
-              "
-            >
-              <div className="flex items-center gap-2.5 sm:gap-3">
-                <svg
-                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--color-gold)]"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="2" y="2" width="20" height="20" rx="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-                </svg>
-                <span className="font-utility text-[8px] sm:text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink)]/70">
-                  Instagram
-                </span>
-              </div>
-              <ArrowUpRight
-                className="
-                h-3.5 w-3.5 sm:h-4 sm:w-4
-                text-[var(--color-emerald)]
-                transition-transform duration-500
-                group-hover:rotate-45
-              "
-              />
-            </a>
+          {/* HOURS */}
+          <div className="md:col-span-4 bg-white/40 border border-[var(--color-stone)] p-6 rounded-3xl flex flex-col justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-[var(--color-gold)] shrink-0" />
+              <span className="font-utility text-[9px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] font-semibold">
+                Режим роботи
+              </span>
+            </div>
+            <p className="font-sans text-sm font-medium text-[var(--color-emerald-deep)] leading-tight">
+              Щодня <br />
+              <span className="text-xs text-[var(--color-ink-soft)] font-normal">
+                09:00 — 17:00
+              </span>
+            </p>
           </div>
         </div>
       </div>
