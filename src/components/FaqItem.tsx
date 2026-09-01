@@ -54,10 +54,11 @@ export default function Faq() {
       className="bg-[var(--color-bg)] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 scroll-mt-20 select-none"
     >
       <div className="mx-auto max-w-[1100px]">
-        {/* ФОНОВЫЙ КОНТЕЙНЕР */}
-        <div className="relative overflow-hidden rounded-3xl bg-white/80 p-6 sm:p-10 lg:p-12 border border-[var(--color-line)] shadow-[0_10px_30px_rgba(0,0,0,0.02)]">
-          {/* Декоративное мягкое свечение */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[var(--color-gold)]/10 blur-3xl" />
+        {/* ФОНОВИЙ КОНТЕЙНЕР З ФІРМОВИМ СВІТЛОМ */}
+        <div className="relative overflow-hidden rounded-3xl bg-white/80 p-6 sm:p-10 lg:p-12 border border-[var(--color-line)] shadow-[0_10px_30px_rgba(0,0,0,0.02)] backdrop-blur-xl">
+          {/* Декоративні м'які фонові елементи (фірмові кольори) */}
+          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[var(--color-gold)]/10 blur-3xl transform-gpu" />
+          <div className="pointer-events-none absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-[var(--color-emerald-deep)]/5 blur-3xl transform-gpu" />
 
           {/* HEADER */}
           <div className="relative z-10 mb-8 sm:mb-12">
@@ -84,7 +85,7 @@ export default function Faq() {
               return (
                 <div
                   key={item.id}
-                  className="overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white"
+                  className="overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white transition-colors duration-200"
                 >
                   {/* QUESTION BUTTON */}
                   <button
@@ -98,27 +99,33 @@ export default function Faq() {
                       {item.question}
                     </span>
 
-                    <span
-                      className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-line)] transition-transform duration-200 ${
+                    <motion.span
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-line)] transform-gpu ${
                         isOpen
-                          ? "rotate-45 bg-[var(--color-emerald-deep)] text-[var(--color-gold)] border-transparent"
+                          ? "bg-[var(--color-emerald-deep)] text-[var(--color-gold)] border-transparent"
                           : "text-[var(--color-ink-soft)]"
                       }`}
                     >
                       <Plus className="h-4 w-4" />
-                    </span>
+                    </motion.span>
                   </button>
 
-                  {/* ANSWER CONTENT */}
+                  {/* ANSWER CONTENT (Оптимізована анімація без лагів) */}
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        key="content"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{
-                          height: { duration: 0.2, ease: "easeOut" },
-                          opacity: { duration: 0.15 },
+                          height: {
+                            duration: 0.25,
+                            ease: [0.04, 0.62, 0.23, 0.98],
+                          },
+                          opacity: { duration: 0.2 },
                         }}
                         className="overflow-hidden transform-gpu"
                       >

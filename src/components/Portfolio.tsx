@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import type { PanInfo, Variants } from "framer-motion";
 
 import p1 from "../assets/portfolio/p1.jpg";
 import p2 from "../assets/portfolio/p2.jpg";
@@ -10,53 +11,101 @@ import p6 from "../assets/portfolio/p6.jpg";
 import p7 from "../assets/portfolio/p7.jpg";
 import p8 from "../assets/portfolio/p8.jpg";
 
-interface PortfolioImage {
-  id: number;
-  src: string;
-  category: "female" | "male";
-  title: string;
-}
+import m1 from "../assets/portfolio/m1.jpg";
+import m2 from "../assets/portfolio/m2.jpg";
+import m3 from "../assets/portfolio/m3.jpg";
+import m4 from "../assets/portfolio/m4.jpg";
+import m5 from "../assets/portfolio/m5.jpg";
+import m6 from "../assets/portfolio/m6.jpg";
+import m7 from "../assets/portfolio/m7.jpg";
+import m8 from "../assets/portfolio/m8.jpg";
 
-const portfolioData: PortfolioImage[] = [
-  { id: 1, src: p1, category: "female", title: "Складне фарбування" },
-  { id: 2, src: p2, category: "female", title: "Вечірній уклад" },
-  { id: 3, src: p3, category: "female", title: "Догляд та відновлення" },
-  { id: 4, src: p4, category: "female", title: "Авторський макіяж" },
-  { id: 5, src: p5, category: "male", title: "Чоловіча стрижка" },
-  { id: 6, src: p6, category: "male", title: "Моделювання бороди" },
-  { id: 7, src: p7, category: "male", title: "Камуфляж сивини" },
-  { id: 8, src: p8, category: "male", title: "Комплексний догляд" },
+// РОЗДІЛЕНІ ФОТОГРАФІЇ
+const femalePhotos = [
+  { id: 1, src: p1, title: "Жіноча робота 1" },
+  { id: 2, src: p2, title: "Жіноча робота 2" },
+  { id: 3, src: p3, title: "Жіноча робота 3" },
+  { id: 4, src: p4, title: "Жіноча робота 4" },
+  { id: 5, src: p5, title: "Жіноча робота 5" },
+  { id: 6, src: p6, title: "Жіноча робота 6" },
+  { id: 7, src: p7, title: "Жіноча робота 7" },
+  { id: 8, src: p8, title: "Жіноча робота 8" },
 ];
+
+const malePhotos = [
+  { id: 9, src: m1, title: "Чоловіча робота 9" },
+  { id: 10, src: m2, title: "Чоловіча робота 10" },
+  { id: 11, src: m3, title: "Чоловіча робота 11" },
+  { id: 12, src: m4, title: "Чоловіча робота 12" },
+  { id: 13, src: m5, title: "Чоловіча робота 13" },
+  { id: 14, src: m6, title: "Чоловіча робота 14" },
+  { id: 15, src: m7, title: "Чоловіча робота 15" },
+  { id: 16, src: m8, title: "Чоловіча робота 16" },
+];
+
+const portfolioData = {
+  female: femalePhotos,
+  male: malePhotos,
+};
 
 const categories = [
   { id: "female" as const, label: "Жіночі" },
   { id: "male" as const, label: "Чоловічі" },
 ];
 
+// Оптимізовані конфіги анімацій
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+  },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.96, y: 12 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 400, damping: 30 },
+  },
+};
+
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState<"female" | "male">("female");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-  const filteredImages = portfolioData.filter(
-    (item) => item.category === activeTab,
-  );
-
+  const currentImages = portfolioData[activeTab];
   const selectedImage =
-    selectedIndex !== null ? filteredImages[selectedIndex] : null;
+    selectedIndex !== null ? currentImages[selectedIndex] : null;
 
   const nextImage = useCallback(() => {
     setSelectedIndex((prev) =>
-      prev !== null ? (prev + 1) % filteredImages.length : null,
+      prev !== null ? (prev + 1) % currentImages.length : null,
     );
-  }, [filteredImages.length]);
+  }, [currentImages.length]);
 
   const prevImage = useCallback(() => {
     setSelectedIndex((prev) =>
       prev !== null
-        ? (prev - 1 + filteredImages.length) % filteredImages.length
+        ? (prev - 1 + currentImages.length) % currentImages.length
         : null,
     );
-  }, [filteredImages.length]);
+  }, [currentImages.length]);
+
+  const handleDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    const swipeThreshold = 50;
+    if (info.offset.x > swipeThreshold) {
+      prevImage();
+    } else if (info.offset.x < -swipeThreshold) {
+      nextImage();
+    }
+  };
 
   useEffect(() => {
     if (selectedIndex === null) return;
@@ -82,9 +131,8 @@ export default function Portfolio() {
       className="relative bg-[var(--color-ivory)] py-16 sm:py-24 lg:py-32 scroll-mt-10"
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-        {/* HEADER SECTION (Заголовок слева, капсулы справа) */}
+        {/* HEADER SECTION */}
         <div className="mb-10 flex flex-col gap-6 sm:mb-16 sm:flex-row sm:items-end sm:justify-between">
-          {/* Текст слева */}
           <div>
             <div className="mb-4 flex items-center gap-4">
               <span className="h-px w-10 bg-[var(--color-gold)] sm:w-14" />
@@ -101,7 +149,7 @@ export default function Portfolio() {
             </h2>
           </div>
 
-          {/* Капсулы-табы справа */}
+          {/* ТАБИ */}
           <div className="flex sm:justify-end">
             <div className="inline-flex rounded-full bg-[var(--color-stone)]/25 p-1 backdrop-blur-sm">
               {categories.map((tab) => {
@@ -113,7 +161,7 @@ export default function Portfolio() {
                       setActiveTab(tab.id);
                       setSelectedIndex(null);
                     }}
-                    className={`relative px-5 py-2 text-[11px] font-semibold tracking-wider uppercase transition-colors duration-300 sm:px-6 sm:py-2.5 ${
+                    className={`relative px-6 py-2.5 text-[11px] font-semibold tracking-wider uppercase transition-colors duration-300 ${
                       isActive
                         ? "text-white"
                         : "text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]"
@@ -125,8 +173,8 @@ export default function Portfolio() {
                         className="absolute inset-0 rounded-full bg-[var(--color-emerald-deep)]"
                         transition={{
                           type: "spring",
-                          stiffness: 400,
-                          damping: 32,
+                          bounce: 0.2,
+                          duration: 0.5,
                         }}
                       />
                     )}
@@ -138,46 +186,37 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* GALLERY GRID */}
+        {/* СІТКА ФОТОГРАФІЙ */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -14 }}
-            transition={{ duration: 0.35 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
             className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4"
           >
-            {filteredImages.map((image, index) => (
+            {currentImages.map((image, index) => (
               <motion.div
                 key={image.id}
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
+                variants={itemVariants}
                 onClick={() => setSelectedIndex(index)}
-                className="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-xl bg-[var(--color-stone)]/20"
+                className="group relative aspect-[3/4] cursor-pointer overflow-hidden rounded-xl bg-[var(--color-stone)]/20 transform-gpu"
               >
                 <img
                   src={image.src}
                   alt={image.title}
                   loading={index < 4 ? "eager" : "lazy"}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
                 />
-
-                {/* Light Hover Veil */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-3.5 text-white opacity-0 transition-all duration-300 translate-y-2 group-hover:translate-y-0 group-hover:opacity-100 sm:p-4">
-                  <p className="font-sans text-[11px] font-medium tracking-wide sm:text-xs">
-                    {image.title}
-                  </p>
-                </div>
+                {/* Легке затемнення при наведенні для естетики (без тексту) */}
+                <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
               </motion.div>
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* CTA FOOTER */}
+        {/* ФУТЕР CTA */}
         <div className="mt-12 flex justify-end sm:mt-16">
           <a
             href="https://www.instagram.com/__beauty___studio___viktoria__"
@@ -187,7 +226,7 @@ export default function Portfolio() {
           >
             Більше робіт в Instagram
             <svg
-              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+              className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 transform-gpu"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -200,23 +239,24 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* LIGHTBOX */}
+      {/* МОБІЛЬНИЙ ЛАЙТБОКС */}
       <AnimatePresence>
         {selectedImage && selectedIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setSelectedIndex(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-emerald-deep)]/95 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-emerald-deep)]/95 p-4 backdrop-blur-md touch-none"
           >
-            {/* Close Button */}
+            {/* Кнопка закриття */}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="absolute top-5 right-5 z-10 p-2 text-white/70 hover:text-white"
+              className="absolute top-4 right-4 z-10 p-3 sm:top-6 sm:right-6 text-white/70 hover:text-white"
             >
               <svg
-                className="h-7 w-7"
+                className="h-7 w-7 sm:h-8 sm:w-8"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -230,53 +270,54 @@ export default function Portfolio() {
               </svg>
             </button>
 
-            {/* Counter */}
+            {/* Лічильник */}
             <div className="absolute top-6 left-6 font-mono text-[11px] tracking-widest text-white/60">
               {String(selectedIndex + 1).padStart(2, "0")} /{" "}
-              {String(filteredImages.length).padStart(2, "0")}
+              {String(currentImages.length).padStart(2, "0")}
             </div>
 
-            {/* Image Container */}
+            {/* Контейнер фото */}
             <motion.div
               key={selectedImage.id}
-              initial={{ scale: 0.95, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[85vh] max-w-[90vw] overflow-hidden rounded-lg sm:max-w-xl"
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.6}
+              onDragEnd={handleDragEnd}
+              className="relative max-h-[85vh] max-w-[90vw] overflow-hidden rounded-lg sm:max-w-xl cursor-grab active:cursor-grabbing transform-gpu"
             >
               <img
                 src={selectedImage.src}
                 alt={selectedImage.title}
-                className="max-h-[78vh] w-full object-contain"
+                className="pointer-events-none max-h-[78vh] w-full object-contain"
               />
-              <div className="bg-black/40 p-3 text-center backdrop-blur-sm">
-                <p className="font-sans text-xs font-medium tracking-wider text-white">
-                  {selectedImage.title}
-                </p>
-              </div>
             </motion.div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                prevImage();
-              }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-3 text-2xl text-white/60 hover:text-white sm:left-6"
-            >
-              ‹
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-3 text-2xl text-white/60 hover:text-white sm:right-6"
-            >
-              ›
-            </button>
+            {/* Стрілки для десктопів */}
+            <div className="hidden sm:block">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
+                className="absolute left-6 top-1/2 -translate-y-1/2 p-4 text-4xl font-light text-white/50 transition-colors hover:text-white"
+              >
+                ‹
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+                className="absolute right-6 top-1/2 -translate-y-1/2 p-4 text-4xl font-light text-white/50 transition-colors hover:text-white"
+              >
+                ›
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

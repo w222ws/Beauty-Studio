@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Phone } from "lucide-react";
@@ -62,7 +64,8 @@ const categories: Category[] = [
 ];
 
 export default function Services() {
-  const [openId, setOpenId] = useState<string | null>("hair");
+  // По умолчанию все закрыто (null)
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const toggleCategory = (id: string) => {
     setOpenId((currentId) => (currentId === id ? null : id));
@@ -79,7 +82,7 @@ export default function Services() {
           <div className="mb-4 flex items-center gap-4">
             <span className="h-px w-10 bg-[var(--color-gold)] sm:w-14" />
             <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.3em] text-[var(--color-ink-soft)] sm:text-[11px]">
-              Прайс-лист
+              Прайс-лист
             </span>
           </div>
 
@@ -187,8 +190,6 @@ export default function Services() {
                             className="mt-6 inline-flex items-center gap-3 rounded-full bg-[var(--color-emerald-deep)] py-2 pl-6 pr-2 transition-all duration-300 hover:bg-[var(--color-emerald-deep)]/90 active:scale-[0.98] sm:mt-8"
                             style={{ WebkitTapHighlightColor: "transparent" }}
                           >
-                            {/* Белый цвет как у открытой карточки (text-white) */}
-                            {/* Если нужен бежевый/золотой — замени text-white на text-[var(--color-gold)] */}
                             <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.2em] text-white">
                               Записатись
                             </span>
