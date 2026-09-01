@@ -64,7 +64,7 @@ export default function Header() {
             alt="Victoria — студія краси"
             width="150"
             height="48"
-            className="h-6 w-auto object-contain sm:h-7"
+            className="h-7 w-auto object-contain sm:h-8"
           />
         </a>
 
@@ -121,7 +121,7 @@ export default function Header() {
             "
           >
             <svg
-              className="h-4 w-4 sm:h-5 sm:w-5"
+              className="h-5 w-5 sm:h-6 sm:w-6"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -148,7 +148,7 @@ export default function Header() {
             "
           >
             <svg
-              className="h-4 w-4 sm:h-5 sm:w-5"
+              className="h-5 w-5 sm:h-6 sm:w-6"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
