@@ -3,7 +3,6 @@
 import { motion, type Variants } from "framer-motion";
 import { ArrowDown, Clock, MapPin } from "lucide-react";
 
-// Плавна та оптимізована анімація (легша на мобільних за рахунок зменшення зсуву)
 const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   show: {
@@ -24,32 +23,23 @@ const fadeUp: Variants = {
 export default function HeroVictoria() {
   return (
     <section className="relative flex min-h-[100dvh] w-full flex-col justify-end overflow-hidden bg-[var(--color-bg)] text-[var(--color-ink)] selection:bg-[var(--color-emerald-pale)] selection:text-[var(--color-emerald-deep)] lg:min-h-[calc(100vh-80px)] lg:justify-center">
-      {/* ================= ФОТОГРАФІЯ ================= */}
-      {/* 
-        Мобільна версія: плавний градієнтний перехід (mask-image) зроблено м'якшим, 
-        щоб нижня частина зображення не обрізалась різко і давала більше простору для тексту.
-      */}
       <div className="absolute inset-x-0 top-0 z-0 h-[62vh] w-full sm:h-[68vh] lg:bottom-4 lg:left-auto lg:right-6 lg:top-0 lg:h-[calc(100%-1rem)] lg:w-[48%] lg:overflow-hidden lg:rounded-b-3xl lg:shadow-2xl lg:shadow-black/5">
-        <motion.img
-          initial={{ scale: 1.05, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        <img
           src="/studio.avif"
           alt="Студія краси Victoria"
+          className="h-full w-full object-cover object-[center_20%] lg:object-[center_20%] lg:[mask-image:none] lg:[webkit-mask-image:none]"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, black 65%, transparent 100%)",
             maskImage:
               "linear-gradient(to bottom, black 65%, transparent 100%)",
           }}
-          className="h-full w-full transform-gpu object-cover object-[center_20%] transition-transform duration-[2000ms] will-change-transform hover:scale-105 lg:object-[center_20%] lg:[mask-image:none] lg:[webkit-mask-image:none]"
         />
 
-        {/* М'який мобільний засвіт зверху для читабельності статус-бару та десктопний оверлей */}
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-bg)]/20 via-transparent to-transparent lg:hidden" />
+
         <div className="absolute inset-0 hidden bg-gradient-to-t from-[var(--color-bg)]/40 via-transparent to-transparent lg:block" />
 
-        {/* Преміальна плашка (Glassmorphism) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,9 +55,7 @@ export default function HeroVictoria() {
         </motion.div>
       </div>
 
-      {/* ================= КОНТЕНТ ================= */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col justify-end px-5 pb-10 pt-28 sm:px-10 lg:flex-row lg:items-center lg:justify-start lg:px-16 lg:pb-0 lg:pt-0">
-        {/* Багатошаровий плавний градієнт для мобільних: гарантує повну відсутність злиття тексту з фото */}
         <div className="absolute inset-x-0 bottom-0 -z-10 h-[75%] bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/98 to-transparent lg:hidden" />
 
         <motion.div
@@ -76,7 +64,6 @@ export default function HeroVictoria() {
           animate="show"
           className="flex w-full max-w-[620px] flex-col lg:w-[52%] lg:pr-8"
         >
-          {/* Інфо-рядок (зменшені відступи та оптимізований розмір длямобільних) */}
           <motion.div
             variants={fadeUp}
             className="mb-4 flex flex-wrap items-center gap-3 text-[11px] font-semibold tracking-[0.18em] text-[var(--color-ink)]/70 uppercase sm:mb-5 sm:text-xs"
@@ -88,10 +75,12 @@ export default function HeroVictoria() {
               />
               Дніпро, Ігрень
             </span>
+
             <span
               className="h-3 w-px bg-[var(--color-ink)]/20"
               aria-hidden="true"
             />
+
             <span className="flex items-center gap-1.5">
               <Clock
                 className="h-3.5 w-3.5 text-[var(--color-gold)]"
@@ -101,7 +90,6 @@ export default function HeroVictoria() {
             </span>
           </motion.div>
 
-          {/* Заголовок (зменшений розмір на смартфонах для запобігання зайвим перенесенням) */}
           <motion.div variants={fadeUp}>
             <h1 className="font-display text-4xl font-medium leading-[1.1] tracking-tight sm:text-6xl lg:text-[4.75rem]">
               Простір вашої <br />
@@ -112,7 +100,6 @@ export default function HeroVictoria() {
             </h1>
           </motion.div>
 
-          {/* Опис (оптимізований контраст та міжрядковий інтервал для кращої читабельності на малих екранах) */}
           <motion.p
             variants={fadeUp}
             className="mt-4 max-w-[440px] font-sans text-sm font-light leading-relaxed text-[var(--color-ink)]/80 sm:mt-6 sm:text-lg"
@@ -121,7 +108,6 @@ export default function HeroVictoria() {
             Підкреслюємо вашу унікальність у затишній атмосфері щодня.
           </motion.p>
 
-          {/* Кнопки (зручніша висота клікабельної зони для мобільних пальців — py-3.5) */}
           <motion.div
             variants={fadeUp}
             className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4 lg:mt-10"

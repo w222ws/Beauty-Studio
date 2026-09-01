@@ -43,19 +43,17 @@ export default function Header() {
         "transition-all duration-base ease-editorial",
         scrolled
           ? [
-              // Преміальне "рідке скло" на твоїх змінних
               "bg-[color:color-mix(in_srgb,var(--color-bg)_70%,transparent)]",
               "backdrop-blur-2xl",
               "backdrop-saturate-[1.8]",
               "border-b border-[var(--color-line)]/40",
               "shadow-[0_12px_40px_-12px_rgb(15_43_33_/_0.15)]",
-              "py-2", // Звужується при скролі
+              "py-2",
             ].join(" ")
-          : "bg-transparent border-b border-transparent py-5", // Більше повітря вгорі
+          : "bg-transparent border-b border-transparent py-5",
       ].join(" ")}
     >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Logo */}
         <a
           href="#hero"
           aria-label="Victoria — студія краси"
@@ -66,12 +64,10 @@ export default function Header() {
             alt="Victoria — студія краси"
             width="150"
             height="48"
-            // Мінімалістичний розмір лого
             className="h-6 w-auto object-contain sm:h-7"
           />
         </a>
 
-        {/* Desktop navigation */}
         <nav
           aria-label="Основна навігація"
           className="hidden items-center gap-8 md:flex lg:gap-10"
@@ -110,9 +106,7 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Actions (З твоїми рідними SVG) */}
         <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-          {/* Instagram */}
           <a
             href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
             target="_blank"
@@ -142,7 +136,6 @@ export default function Header() {
             </svg>
           </a>
 
-          {/* Phone */}
           <a
             href="tel:+380973968632"
             aria-label="Зателефонувати в студію"

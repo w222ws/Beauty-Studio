@@ -1,27 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Кольори: поглиблені й потеплені для відчуття дорогого, тактильного бренду */
   --color-ink: #1a221f;
   --color-ink-soft: #4a544f;
   --color-ink-faint: #7a827c;
 
-  --color-emerald-deep: #0f2b21; /* Ще глибший, майже чорний смарагд */
+  --color-emerald-deep: #0f2b21;
   --color-emerald-mid: #235644;
   --color-emerald-pale: #e9eeeb;
 
-  --color-gold: #b8935e; /* Тепла матова бронза замість жовтизни */
+  --color-gold: #b8935e;
   --color-gold-soft: #e3cda4;
   --color-gold-deep: #8f6d3f;
 
-  --color-blush: #d9b9a4; /* Делікатний акцент "пудра" — для дрібних деталей */
+  --color-blush: #d9b9a4;
 
-  --color-bg: #f9f7f3; /* М'який теплий папір/мармур */
+  --color-bg: #f9f7f3;
   --color-paper: #f1ece3;
   --color-line: #e0d7c8;
 
-  /* Шрифти: контрастний editorial-serif для заголовків + чистий геометричний
-     sans для тексту. Обидва мають повну підтримку кирилиці. */
   --font-display: "Playfair Display", ui-serif, Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, sans-serif;
 
@@ -57,8 +54,6 @@ body {
     "kern" 1;
 }
 
-/* Заголовки: контрастний serif із трохи ширшим міжлітерним інтервалом —
-   editorial-відчуття, властиве преміальним журналам про красу. */
 h1,
 h2,
 h3,
@@ -81,8 +76,6 @@ h2 {
   letter-spacing: 0.015em;
 }
 
-/* Курсивне накреслення display-шрифту — для делікатних підзаголовків
-   і цитат, без надмірного декору */
 .text-display-italic {
   font-family: var(--font-display);
   font-style: italic;
@@ -100,7 +93,6 @@ a {
   text-decoration: none;
 }
 
-/* Тонка золота лінія-розділювач — структурний елемент, а не декор */
 .hr-gold {
   height: 1px;
   width: 100%;

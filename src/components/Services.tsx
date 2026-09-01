@@ -64,7 +64,6 @@ const categories: Category[] = [
 ];
 
 export default function Services() {
-  // По умолчанию все закрыто (null)
   const [openId, setOpenId] = useState<string | null>(null);
 
   const toggleCategory = (id: string) => {
@@ -77,7 +76,6 @@ export default function Services() {
       className="bg-[var(--color-bg)] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 scroll-mt-20 select-none"
     >
       <div className="mx-auto max-w-[1100px]">
-        {/* HEADER */}
         <div className="mb-10 sm:mb-16">
           <div className="mb-4 flex items-center gap-4">
             <span className="h-px w-10 bg-[var(--color-gold)] sm:w-14" />
@@ -94,7 +92,6 @@ export default function Services() {
           </h2>
         </div>
 
-        {/* CATEGORIES */}
         <div className="flex flex-col gap-3 sm:gap-4">
           {categories.map((category) => {
             const isOpen = openId === category.id;
@@ -108,7 +105,6 @@ export default function Services() {
                     : "border-[var(--color-line)] bg-transparent hover:border-[var(--color-gold)]/30"
                 }`}
               >
-                {/* CATEGORY BUTTON */}
                 <button
                   type="button"
                   onClick={() => toggleCategory(category.id)}
@@ -143,7 +139,6 @@ export default function Services() {
                   </span>
                 </button>
 
-                {/* CONTENT */}
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div

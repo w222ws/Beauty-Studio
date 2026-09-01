@@ -54,13 +54,10 @@ export default function Faq() {
       className="bg-[var(--color-bg)] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 scroll-mt-20 select-none"
     >
       <div className="mx-auto max-w-[1100px]">
-        {/* ФОНОВИЙ КОНТЕЙНЕР З ФІРМОВИМ СВІТЛОМ */}
         <div className="relative overflow-hidden rounded-3xl bg-white/80 p-6 sm:p-10 lg:p-12 border border-[var(--color-line)] shadow-[0_10px_30px_rgba(0,0,0,0.02)] backdrop-blur-xl">
-          {/* Декоративні м'які фонові елементи (фірмові кольори) */}
           <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[var(--color-gold)]/10 blur-3xl transform-gpu" />
           <div className="pointer-events-none absolute -left-20 -bottom-20 h-72 w-72 rounded-full bg-[var(--color-emerald-deep)]/5 blur-3xl transform-gpu" />
 
-          {/* HEADER */}
           <div className="relative z-10 mb-8 sm:mb-12">
             <div className="mb-4 flex items-center gap-4">
               <span className="h-px w-10 bg-[var(--color-gold)] sm:w-14" />
@@ -77,7 +74,6 @@ export default function Faq() {
             </h2>
           </div>
 
-          {/* ACCORDION LIST */}
           <div className="relative z-10 flex flex-col gap-3">
             {faqList.map((item) => {
               const isOpen = openId === item.id;
@@ -87,7 +83,6 @@ export default function Faq() {
                   key={item.id}
                   className="overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white transition-colors duration-200"
                 >
-                  {/* QUESTION BUTTON */}
                   <button
                     type="button"
                     onClick={() => toggleFaq(item.id)}
@@ -112,7 +107,6 @@ export default function Faq() {
                     </motion.span>
                   </button>
 
-                  {/* ANSWER CONTENT (Оптимізована анімація без лагів) */}
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div

@@ -53,7 +53,6 @@ const categories = [
   { id: "male" as const, label: "Чоловічі" },
 ];
 
-// Оптимізовані конфіги анімацій
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
@@ -131,7 +130,6 @@ export default function Portfolio() {
       className="relative bg-[var(--color-ivory)] py-16 sm:py-24 lg:py-32 scroll-mt-10"
     >
       <div className="mx-auto max-w-[1100px] px-5 sm:px-8">
-        {/* HEADER SECTION */}
         <div className="mb-10 flex flex-col gap-6 sm:mb-16 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="mb-4 flex items-center gap-4">
@@ -149,7 +147,6 @@ export default function Portfolio() {
             </h2>
           </div>
 
-          {/* ТАБИ */}
           <div className="flex sm:justify-end">
             <div className="inline-flex rounded-full bg-[var(--color-stone)]/25 p-1 backdrop-blur-sm">
               {categories.map((tab) => {
@@ -186,7 +183,6 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* СІТКА ФОТОГРАФІЙ */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -209,14 +205,12 @@ export default function Portfolio() {
                   loading={index < 4 ? "eager" : "lazy"}
                   className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
                 />
-                {/* Легке затемнення при наведенні для естетики (без тексту) */}
                 <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
               </motion.div>
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* ФУТЕР CTA */}
         <div className="mt-12 flex justify-end sm:mt-16">
           <a
             href="https://www.instagram.com/__beauty___studio___viktoria__"
@@ -239,7 +233,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* МОБІЛЬНИЙ ЛАЙТБОКС */}
       <AnimatePresence>
         {selectedImage && selectedIndex !== null && (
           <motion.div
@@ -250,7 +243,6 @@ export default function Portfolio() {
             onClick={() => setSelectedIndex(null)}
             className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-emerald-deep)]/95 p-4 backdrop-blur-md touch-none"
           >
-            {/* Кнопка закриття */}
             <button
               onClick={() => setSelectedIndex(null)}
               className="absolute top-4 right-4 z-10 p-3 sm:top-6 sm:right-6 text-white/70 hover:text-white"
@@ -270,13 +262,11 @@ export default function Portfolio() {
               </svg>
             </button>
 
-            {/* Лічильник */}
             <div className="absolute top-6 left-6 font-mono text-[11px] tracking-widest text-white/60">
               {String(selectedIndex + 1).padStart(2, "0")} /{" "}
               {String(currentImages.length).padStart(2, "0")}
             </div>
 
-            {/* Контейнер фото */}
             <motion.div
               key={selectedImage.id}
               initial={{ scale: 0.92, opacity: 0 }}
@@ -297,7 +287,6 @@ export default function Portfolio() {
               />
             </motion.div>
 
-            {/* Стрілки для десктопів */}
             <div className="hidden sm:block">
               <button
                 onClick={(e) => {

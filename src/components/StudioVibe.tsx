@@ -19,12 +19,10 @@ export default function StudioServicesMarquee() {
       id="about"
       className="relative w-full overflow-hidden bg-[var(--color-emerald-deep)] py-7 text-[#F5F2EB] shadow-2xl sm:py-9 select-none"
     >
-      {/* Градиентные маски растворения по краям */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[var(--color-emerald-deep)] to-transparent sm:w-36" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[var(--color-emerald-deep)] to-transparent sm:w-36" />
 
       <div className="flex flex-col gap-3.5 sm:gap-4">
-        {/* ВЕРХНЯЯ СТРОКА: Едет влево */}
         <div className="flex w-full overflow-hidden whitespace-nowrap">
           <div className="flex shrink-0 animate-marquee-left items-center gap-8 sm:gap-12 pr-8 sm:pr-12">
             {[...primaryItems, ...primaryItems].map((text, i) => (
@@ -59,7 +57,6 @@ export default function StudioServicesMarquee() {
           </div>
         </div>
 
-        {/* НИЖНЯЯ СТРОКА: Едет вправо */}
         <div className="flex w-full overflow-hidden whitespace-nowrap">
           <div className="flex shrink-0 animate-marquee-right items-center gap-8 sm:gap-12 pr-8 sm:pr-12">
             {[...secondaryItems, ...secondaryItems, ...secondaryItems].map(

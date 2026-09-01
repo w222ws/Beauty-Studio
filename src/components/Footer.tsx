@@ -16,7 +16,6 @@ export default function Footer() {
     <footer className="bg-[var(--color-ivory)] border-t border-[var(--color-stone)] py-8 sm:py-10 px-4 sm:px-6 lg:px-8 select-none">
       <div className="max-w-[960px] mx-auto">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
-          {/* Копирайт */}
           <div className="font-utility text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)] text-center sm:text-left">
             © {new Date().getFullYear()}{" "}
             <span className="text-[var(--color-emerald-deep)] font-semibold">
@@ -24,7 +23,6 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Разработчик */}
           <div className="font-utility text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[var(--color-ink-soft)]">
             <span>Розробка: </span>
             <a
@@ -37,7 +35,6 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Кнопка "Вгору" */}
           <button
             type="button"
             onClick={handleScrollToTop}

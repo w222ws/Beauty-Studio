@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Copy, Check, ArrowUpRight, MapPin, Phone, Clock } from "lucide-react";
 
-/* Кастомная SVG-иконка Instagram в общем стиле Lucide */
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -47,7 +46,6 @@ export default function Contact() {
       className="bg-[var(--color-ivory)] py-16 sm:py-24 px-4 sm:px-6 lg:px-8 scroll-mt-20 select-none"
     >
       <div className="max-w-[960px] mx-auto">
-        {/* HEADER (Слева, без дублирования названия) */}
         <div className="mb-10 sm:mb-14">
           <div className="flex items-center gap-3 mb-3">
             <span className="h-px w-10 bg-[var(--color-gold)]" />
@@ -67,9 +65,7 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* CARDS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-          {/* PHONE (Большая карточка слева) */}
           <a
             href="tel:+380973968632"
             className="group md:col-span-8 bg-white/80 border border-[var(--color-stone)] p-6 sm:p-7 rounded-3xl flex items-center justify-between transition-all duration-300 hover:border-[var(--color-gold)] hover:bg-white hover:shadow-sm active:scale-[0.99]"
@@ -91,7 +87,6 @@ export default function Contact() {
             <ArrowUpRight className="h-5 w-5 text-[var(--color-ink-soft)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--color-gold)]" />
           </a>
 
-          {/* INSTAGRAM (Маленькая иконка-кнопка справа) */}
           <a
             href="https://www.instagram.com/__beauty___studio___viktoria__?igsh=MW4yb2FjMnVub25j"
             target="_blank"
@@ -111,7 +106,6 @@ export default function Contact() {
             <ArrowUpRight className="h-5 w-5 text-[var(--color-ink-soft)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--color-gold)]" />
           </a>
 
-          {/* ADDRESS + MAP LINK */}
           <div
             onClick={() => window.open(mapsUrl, "_blank")}
             className="group cursor-pointer md:col-span-8 bg-white/80 border border-[var(--color-stone)] p-6 sm:p-7 rounded-3xl flex flex-col justify-between gap-4 transition-all duration-300 hover:border-[var(--color-gold)] hover:bg-white hover:shadow-sm active:scale-[0.99]"
@@ -155,7 +149,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* HOURS */}
           <div className="md:col-span-4 bg-white/40 border border-[var(--color-stone)] p-6 rounded-3xl flex flex-col justify-between gap-3">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-[var(--color-gold)] shrink-0" />
